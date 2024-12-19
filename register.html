@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Register</title>
+
+   <!-- Font Awesome CDN link -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- Custom CSS file link -->
+   <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+   <section class="flex">
+      <a href="index.html" class="logo">Vidya-मित्रम्</a>
+
+      <form action="search.html" method="post" class="search-form">
+         <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
+         <button type="submit" class="fas fa-search"></button>
+      </form>
+
+      <div class="icons">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div id="search-btn" class="fas fa-search"></div>
+         <div id="user-btn" class="fas fa-user"></div>
+         <div id="toggle-btn" class="fas fa-sun"></div>
+      </div>
+
+      <div class="profile">
+         <img src="images/logo project.jpg" class="image" alt="Logo">
+         <h3 class="name">Vidya-मित्रम्</h3>
+         <div class="flex-btn">
+            <a href="login.html" class="option-btn">Login</a>
+            <a href="register.html" class="option-btn">Register</a>
+         </div>
+      </div>
+   </section>
+</header>
+
+<div class="side-bar">
+   <div id="close-btn">
+      <i class="fas fa-times"></i>
+   </div>
+
+   <div class="profile">
+      <img src="images/logo project.jpg" class="image" alt="Logo">
+      <h3 class="name">Vidya-मित्रम्</h3>
+   </div>
+
+   <nav class="navbar">
+      <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="about.html"><i class="fas fa-question"></i><span>About</span></a>
+      <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Courses</span></a>
+      <a href="contact.html"><i class="fas fa-headset"></i><span>Contact Us</span></a>
+   </nav>
+</div>
+
+<section class="form-container">
+   <form action="/register" method="POST" id="register-form">
+      <h3>Register Now</h3>
+
+      <p>Your Name <span>*</span></p>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required maxlength="50" class="box">
+
+      <p>Your Email <span>*</span></p>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required maxlength="50" class="box">
+
+      <p>Your Password <span>*</span></p>
+      <input type="password" id="password" name="pass" placeholder="Enter your password" required maxlength="20" class="box">
+
+      <p>Confirm Password <span>*</span></p>
+      <input type="password" id="c_password" name="c_pass" placeholder="Confirm your password" required maxlength="20" class="box">
+
+      <p><input type="checkbox" id="terms" required> I agree to the terms of services</p>
+
+      <input type="submit" value="Register" class="btn">
+   </form>
+</section>
+
+<footer class="footer">
+   &copy; Copyright @ CDKR Innovators | All Rights Reserved!
+</footer>
+
+<!-- Custom JS file link -->
+<script src="js/script.js"></script>
+<script>
+   document.getElementById('register-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const c_password = document.getElementById('c_password').value.trim();
+
+      if (!name || !email || !password || !c_password) {
+         alert("Please fill all the fields.");
+         return;
+      }
+
+      if (password !== c_password) {
+         alert("Passwords do not match.");
+         return;
+      }
+
+      const data = {
+         name,
+         email,
+         password,
+      };
+
+      fetch('/register', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(data),
+      })
+         .then((response) => response.text())
+         .then((result) => {
+            alert("Registration successful!");
+            console.log(result);
+         })
+         .catch((error) => {
+            console.error("Error:", error);
+         });
+   });
+</script>
+
+</body>
+</html>
